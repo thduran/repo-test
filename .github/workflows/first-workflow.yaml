@@ -1,5 +1,5 @@
 # defines name of the worflow
-name: Simple-Workflow
+name: simple-workflow
 
 # defines the trigger
 on: push
