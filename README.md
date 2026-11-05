@@ -1,5 +1,3 @@
-[english below]
-
 ## **1. Gitflow na prática**
 
 ### **Passos:**
@@ -147,6 +145,7 @@
 ## **4. GitHub Actions: exemplo simples**
 
 * **Exemplo:** O arquivo `.github/workflows/first-workflow.yaml` é um workflow simples que imprime "Hello World" toda vez que der `push` na `main`.
+
 ```yaml
 # Exemplo
 name: simple-workflow
@@ -164,158 +163,189 @@ jobs:
     steps:
       - name: Display Hello World
         run: echo "Hello World!"
+```
 
 ---
 
 [english]
 
-## **1. Gitflow in practice**
+## 1. Gitflow in Practice
 
-### **Steps:**
+### Steps
 
-1.  **Starting:**
-    * Create the repo.
-    * Initialize git:
-      ```bash
-      git init
-      ```
+1. **Starting**
+   - Create the repo.
+   - Initialize git:
 
-2.  **Development branch (`developer`):**
-    * Create the development branch:
-      ```bash
-      git checkout -b developer
-      ```
-    * Add the code (ex: `main.go`), make the commit:
-      ```bash
-      git add .
-      git commit -m "feat: project code"
-      ```
+     ```bash
+     git init
+     ```
 
-3.  **Feature branch (`feature`):**
-    * Create a branch for a new feature, starting from `developer`:
-      ```bash
-      git checkout -b feature/feature-xpto
-      ```
-    * Change the code (`main.go`), make the commit:
-      ```bash
-      git add .
-      git commit -m "feat: implements XPTO feature"
-      ```
-    * Use `git log` to see the commit history across all branches..
+2. **Development branch (`developer`)**
+   - Create the development branch:
 
-4.  **Merge feature to developer:**
-    * Go back to the `developer` branch:
-      ```bash
-      git checkout developer
-      git branch # to confirm the current branch
-      ```
-    * Integrate the changes from `feature`:
-      ```bash
-      git merge feature/feature-xpto
-      ```
+     ```bash
+     git checkout -b developer
+     ```
 
-5.  **Release branch (`release`):**
-    * Create a `release` branch from `developer` to prepare a new version (staging environment):
-      ```bash
-      git checkout -b release
-      ```
-    * *Note: The `main` branch represents production. Create it if it doesn't exist yet:
-      ```bash
-      git checkout -b main
-      ```
+   - Add the code (e.g., `main.go`), then commit:
 
-6.  **Merge release to main:**
-    * After testing and approval on `release`, integrate into `main`:
-      ```bash
-      git checkout main
-      git merge release
-      ```
-    * Use `git log` to see that all branches have the same commit base after the merges.
+     ```bash
+     git add .
+     git commit -m "feat: project code"
+     ```
 
-7.  **Hotfix branch (`hotfix`):**
-    * If a bug appears in production (`main`), create a `hotfix` branch starting from `main`:
-      ```bash
-      git checkout -b hotfix/fix-xpto
-      ```
-    * Make the correction, add and commit:
-      ```bash
-      git add .
-      git commit -m "fix: corrects XPTO bug"
-      ```
+3. **Feature branch (`feature`)**
+   - Create a branch for a new feature, starting from `developer`:
 
-8.  **Merge hotfix:**
-    * Integrate into `main`:
-      ```bash
-      git checkout main
-      git merge hotfix/fix-xpto
-      ```
-    * **Important:** Integrate also into `developer` to prevent the bug from returning:
-      ```bash
-      git checkout developer
-      git merge hotfix/fix-xpto
-      ```
-    * *Note:* if you look at the code in `developer` before this merge, it will still be the old version, without the fix.
+     ```bash
+     git checkout -b feature/feature-xpto
+     ```
 
----
+   - Change the code (`main.go`), then commit:
 
-## **2. GitHub Flow**
+     ```bash
+     git add .
+     git commit -m "feat: implements XPTO feature"
+     ```
 
-### **Steps:**
+   - Use `git log` to see the commit history across all branches.
 
-1.  Create the `main` branch, add the code and push:
-    ```bash
-    # ... git add ., git commit ...
-    git push origin main
-    ```
+4. **Merge feature to developer**
+   - Go back to the `developer` branch:
 
-2.  **Feature branch (`feature`):**
-    * Create and switch to a new branch for each feature or fix:
-      ```bash
-      git checkout -b feature/xpto
-      ```
-    * Change the code, make the commit and push:
-      ```bash
-      # ... git add ., git commit ...
-      git push origin feature/xpto
-      ```
+     ```bash
+     git checkout developer
+     git branch # to confirm the current branch
+     ```
 
-3.  **Open a Pull Request (PR):**
-    * On GitHub, there will be a message suggesting the creation of a PR.
-    * You can also go to **Pull requests > New pull request**.
-    * Select the source branch (`feature/xpto`) and destination (`main`).
-    * Click **Create pull request**.
-    * *Another way:* use the **Compare & pull request** button that appears after the push.
+   - Integrate the changes from `feature`:
 
-4.  **Review and merge:**
-    * By default, it is expected that someone else reviews the PR code..
-    * The reviewer goes to **Pull requests**, selects the PR, reviews (commits, files) and, if everything is okay, clicks **Merge pull request**.
+     ```bash
+     git merge feature/feature-xpto
+     ```
 
-5.  **Update the local repo:**
-    * Go back to the `main` branch and pull:
-      ```bash
-      git checkout main
-      git pull origin main
-      ```
-    * Now the local code in `main` will be updated with what was done via PR.
+5. **Release branch (`release`)**
+   - Create a `release` branch from `developer` to prepare a new version (staging environment):
+
+     ```bash
+     git checkout -b release
+     ```
+
+   - *Note:* The `main` branch represents production. Create it if it doesn't exist yet:
+
+     ```bash
+     git checkout -b main
+     ```
+
+6. **Merge release to main**
+   - After testing and approval on `release`, integrate into `main`:
+
+     ```bash
+     git checkout main
+     git merge release
+     ```
+
+   - Use `git log` to see that all branches have the same commit base after the merges.
+
+7. **Hotfix branch (`hotfix`)**
+   - If a bug appears in production (`main`), create a `hotfix` branch starting from `main`:
+
+     ```bash
+     git checkout -b hotfix/fix-xpto
+     ```
+
+   - Make the correction, then add and commit:
+
+     ```bash
+     git add .
+     git commit -m "fix: corrects XPTO bug"
+     ```
+
+8. **Merge hotfix**
+   - Integrate into `main`:
+
+     ```bash
+     git checkout main
+     git merge hotfix/fix-xpto
+     ```
+
+   - **Important:** Integrate also into `developer` to prevent the bug from returning:
+
+     ```bash
+     git checkout developer
+     git merge hotfix/fix-xpto
+     ```
+
+   - *Note:* if you look at the code in `developer` before this merge, it will still be the old version, without the fix.
 
 ---
 
-## **3. Pull Request template**
+## 2. GitHub Flow
 
-* **Creation:**
-    * In the repo, press the `.` key to open the online editor.
-    * Create a `.github` folder.
-    * Inside it, create a file named `pull_request_template.md`.
-    * Make the commit through the "Source Control" icon in the editor.
-    * To return to the repo, click the 3-line icon (menu).
+### Steps
 
-* **Result:** every time someone creates a PR, the description field will already be filled.
+1. Create the `main` branch, add the code, and push:
+
+   ```bash
+   # ... git add ., git commit ...
+   git push origin main
+   ```
+
+2. **Feature branch (`feature`)**
+   - Create and switch to a new branch for each feature or fix:
+
+     ```bash
+     git checkout -b feature/xpto
+     ```
+
+   - Change the code, commit, and push:
+
+     ```bash
+     # ... git add ., git commit ...
+     git push origin feature/xpto
+     ```
+
+3. **Open a Pull Request (PR)**
+   - On GitHub, there will be a message suggesting the creation of a PR.
+   - You can also go to **Pull requests > New pull request**.
+   - Select the source branch (`feature/xpto`) and destination (`main`).
+   - Click **Create pull request**.
+   - *Another way:* use the **Compare & pull request** button that appears after the push.
+
+4. **Review and merge**
+   - By default, it is expected that someone else reviews the PR code.
+   - The reviewer goes to **Pull requests**, selects the PR, reviews (commits, files) and, if everything is okay, clicks **Merge pull request**.
+
+5. **Update the local repo**
+   - Go back to the `main` branch and pull:
+
+     ```bash
+     git checkout main
+     git pull origin main
+     ```
+
+   - Now the local code in `main` will be updated with what was done via PR.
 
 ---
 
-## **4. GitHub Actions: simple example**
+## 3. Pull Request Template
 
-* **Example:** The `.github/workflows/first-workflow.yaml` file is a simple workflow that prints "Hello World" every time you `push` to `main`.
+- **Creation**
+  - In the repo, press the `.` key to open the online editor.
+  - Create a `.github` folder.
+  - Inside it, create a file named `pull_request_template.md`.
+  - Make the commit through the "Source Control" icon in the editor.
+  - To return to the repo, click the 3-line icon (menu).
+
+- **Result:** every time someone creates a PR, the description field will already be filled.
+
+---
+
+## 4. GitHub Actions: Simple Example
+
+**Example:** The `.github/workflows/first-workflow.yaml` file is a simple workflow that prints "Hello World" every time you `push` to `main`.
+
 ```yaml
 # Example
 name: simple-workflow
@@ -333,3 +363,4 @@ jobs:
     steps:
       - name: Display Hello World
         run: echo "Hello World!"
+```
